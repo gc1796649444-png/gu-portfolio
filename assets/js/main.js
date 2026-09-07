@@ -246,7 +246,7 @@
 
   function refreshVideoHint(card) {
     var note = card.querySelector('.vc-note');
-    if (note) note.textContent = soundGranted ? '悬停播放 · 有声' : '悬停预览 · 点一次后自动有声';
+    if (note) note.textContent = soundGranted ? '悬停播放 · 点击放大' : '悬停预览 · 点击放大播放';
   }
 
   /* 手机端：点击视频卡片 -> 全屏自适应播放；电脑端保持原有交互不受影响 */
@@ -284,7 +284,7 @@
     justOpened = true;
     clearTimeout(openVideoPreview._reset);
     openVideoPreview._reset = setTimeout(function () { justOpened = false; }, 450);
-    if (narrow) doc.body.style.overflow = 'hidden';
+    doc.body.style.overflow = 'hidden';
     var p = videoPreviewVideo.play();
     if (p) p.catch(function () {
       videoPreviewVideo.muted = true;
@@ -324,29 +324,10 @@
     card.addEventListener('focus', function () { playCardVideo(card); });
     card.addEventListener('blur', function () { stopCardVideo(card); });
     card.addEventListener('click', function () {
-      if (coarse || narrow) {
-        openVideoPreview(card);
-        return;
-      }
-      if (v.muted) {
-        soundGranted = true;
-        v.muted = false;
-        v.currentTime = 0;
-        var p = v.play();
-        if (p) p.catch(function () {
-          v.muted = true;
-          var p2 = v.play();
-          if (p2) p2.catch(function () {});
-        });
-        refreshVideoHint(card);
-      } else if (v.paused) {
-        v.play().catch(function () {});
-      } else {
-        v.pause();
-      }
+      openVideoPreview(card);
     });
   });
-  if ((coarse || narrow) && videoPreview) {
+  if (videoPreview) {
     doc.addEventListener('click', function (e) {
       if (!justOpened && videoPreview.classList.contains('show') && !e.target.closest('.video-preview')) {
         hideVideoPreview();
