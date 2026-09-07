@@ -1093,8 +1093,8 @@ html { scroll-snap-type: none; overflow-x: hidden; }
 @media (max-width: 720px) {
   /* 1. 首页首屏：咕咕 + 名字 + 三张岗位卡尽量同屏 */
   .home { justify-content: center; padding-top: calc(var(--nav-h) + 6px); }
-  /* 背景画面取景：镜头整体左移 20%，让左侧的咕咕角色完整入镜 */
-  .home-video { object-fit: cover; object-position: 30% 50%; }
+  /* 背景画面取景：镜头整体左移 30%，让左侧的咕咕角色完整入镜 */
+  .home-video { object-fit: cover; object-position: 20% 50%; }
   .home-content {
     width: min(520px, 96vw);
     margin-inline: auto;
