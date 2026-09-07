@@ -1106,20 +1106,33 @@ html { scroll-snap-type: none; overflow-x: hidden; }
   .home-name { text-align: center; font-size: clamp(2.8rem, 13.5vw, 4.4rem); }
   .jobs-fan { margin: 4px auto 0; height: 236px; transform: scale(.78); transform-origin: top center; }
 
-  /* 2. 工作经历：点开后文字占满放大区域，不留空白 */
-  .exp-grid { gap: 14px; }
-  .exp-card:hover .exp-summary,
-  .exp-card:focus-within .exp-summary,
-  .exp-card.is-open .exp-summary { display: none; }
-  .exp-card.is-open .exp-full {
-    display: block;
-    position: relative;
-    inset: auto;
-    padding: 18px 2px 4px;
-    overflow: visible;
+  /* 2. 工作经历：中心“放大镜”——卡片在原位平滑增高展开/缩回，高度由脚本逐帧驱动 */
+  .exp-grid { gap: 18px; }
+  .exp-card {
+    position: relative !important;
+    height: 240px;
+    overflow: hidden;
+    padding: 0 !important;
+    will-change: height, margin-top, opacity;
   }
-  .exp-card.is-open .exp-full-head { margin-bottom: 4px; }
-  .exp-keywords { margin: 2px 0 10px; font-size: 12px; }
+  .exp-summary,
+  .exp-full {
+    position: relative !important;
+    display: block !important;
+    margin: 0;
+  }
+  .exp-summary {
+    padding: 22px 18px 16px;
+    opacity: 1;
+    border-bottom: 2px dashed var(--ink);
+  }
+  .exp-full {
+    padding: 18px 18px 22px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+  }
+  .exp-full-head { display: none; }
   .exp-full ul { padding-left: 16px; }
   .exp-full li { font-size: 13.5px; margin-bottom: 7px; }
 
