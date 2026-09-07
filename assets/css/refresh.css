@@ -1,0 +1,1052 @@
+/* ==========================================================================
+   Refresh v2 · 首页 / 经历行内展开 / 作品画廊 / 技能漂浮 / 联系方式
+   ========================================================================== */
+
+.sec-sub { margin: 6px 0 0; font-size: 14px; color: var(--ink-soft); font-weight: 600; }
+.sec-head { display: flex; align-items: center; justify-content: space-between; gap: 26px; }
+.sec-head-text { min-width: 0; }
+html { scroll-snap-type: none; overflow-x: hidden; }
+
+/* ==========================================================================
+   首页：右上排版；英文名跟在中文名后面
+   ========================================================================== */
+
+.home {
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
+  padding: calc(var(--nav-h) + 30px) 0 110px;
+  overflow: hidden;
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
+  width: min(980px, 94vw);
+  margin-left: auto;
+  margin-right: clamp(16px, 6vw, 110px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.home-en-top {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .42em;
+  color: var(--ink-soft);
+  text-shadow: 0 1px 0 rgba(255, 253, 247, .9);
+}
+
+.home-name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.8rem, 11vw, 8.4rem);
+  line-height: 1.02;
+  margin: 0;
+  text-shadow: 3px 3px 0 rgba(255, 201, 60, .95), 0 0 26px rgba(255, 253, 247, .75);
+  white-space: nowrap;
+}
+
+.home-en-inline {
+  display: inline-block;
+  margin-left: .28em;
+  font-size: .34em;
+  vertical-align: .32em;
+  letter-spacing: .08em;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+  opacity: .85;
+  text-shadow: none;
+}
+
+/* --- 职业风扇卡（缩小版） --- */
+.jobs-fan {
+  position: relative;
+  width: min(520px, 86vw);
+  height: 232px;
+  margin: 10px 0 0;
+  flex: none;
+}
+.jobs-fan:hover .job-card { animation-play-state: paused; }
+
+.job-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 162px;
+  height: 208px;
+  margin: -104px 0 0 -81px;
+  border: var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow-hard);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  will-change: transform, z-index;
+}
+.job-ghost {
+  position: absolute;
+  right: -16px;
+  bottom: -46px;
+  font-family: var(--font-display);
+  font-size: 150px;
+  line-height: 1;
+  color: rgba(255, 255, 255, .3);
+  pointer-events: none;
+}
+.job-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--white);
+  padding: 16px 12px;
+  text-shadow: 0 2px 0 rgba(43, 38, 32, .25);
+}
+.job-inner h2 { font-family: var(--font-display); font-weight: 400; font-size: 1.42rem; margin: 0 0 2px; }
+.job-inner p { margin: 0 0 8px; font-size: 10px; font-weight: 700; letter-spacing: .2em; opacity: .92; }
+.job-inner span { display: block; font-size: 11.5px; font-weight: 700; opacity: .9; }
+
+.job-1 { background: linear-gradient(150deg, #FFD34D, #FF8C42); transform: translate(-128px, 16px) rotate(-12deg) scale(.92); z-index: 1; }
+.job-2 { background: linear-gradient(150deg, #6AC6DC, #2F86A6); transform: translate(0, -6px) rotate(0deg) scale(1); z-index: 4; }
+.job-3 { background: linear-gradient(150deg, #FF8A8D, #E34B5A); transform: translate(128px, 16px) rotate(12deg) scale(.92); z-index: 1; }
+
+@keyframes fan-pos-a {
+  0%, 100% { transform: translate(0, -6px) rotate(0deg) scale(1); z-index: 4; }
+  33.33%   { transform: translate(128px, 16px) rotate(12deg) scale(.92); z-index: 1; }
+  66.66%   { transform: translate(-128px, 16px) rotate(-12deg) scale(.92); z-index: 1; }
+}
+@keyframes fan-pos-b {
+  0%, 100% { transform: translate(128px, 16px) rotate(12deg) scale(.92); z-index: 1; }
+  33.33%   { transform: translate(-128px, 16px) rotate(-12deg) scale(.92); z-index: 1; }
+  66.66%   { transform: translate(0, -6px) rotate(0deg) scale(1); z-index: 4; }
+}
+@keyframes fan-pos-c {
+  0%, 100% { transform: translate(-128px, 16px) rotate(-12deg) scale(.92); z-index: 1; }
+  33.33%   { transform: translate(0, -6px) rotate(0deg) scale(1); z-index: 4; }
+  66.66%   { transform: translate(128px, 16px) rotate(12deg) scale(.92); z-index: 1; }
+}
+.job-1 { animation: fan-pos-a 15s ease-in-out infinite; }
+.job-2 { animation: fan-pos-b 15s ease-in-out infinite; }
+.job-3 { animation: fan-pos-c 15s ease-in-out infinite; }
+
+/* --- 左下信息条 --- */
+.home-meta {
+  position: absolute;
+  left: clamp(18px, 4vw, 52px);
+  bottom: clamp(18px, 4vh, 40px);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: clamp(13px, 1.3vw, 15px);
+  background: rgba(251, 244, 227, .82);
+  backdrop-filter: blur(6px);
+  border: var(--line);
+  border-radius: 999px;
+  padding: 11px 22px 11px 16px;
+  box-shadow: 5px 5px 0 var(--ink);
+  transform: rotate(-1.5deg);
+}
+.home-meta i { font-style: normal; opacity: .45; }
+.meta-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 2px solid var(--ink);
+  animation: meta-blink 1.6s ease-in-out infinite;
+}
+@keyframes meta-blink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+
+/* ==========================================================================
+   工作经历：真人照 + 卡片行内展开
+   ========================================================================== */
+
+.exp-photo {
+  margin: 0;
+  flex: none;
+  width: 118px;
+  padding: 6px;
+  border-radius: 24px;
+  transform: rotate(3deg);
+  background: var(--paper-3);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.exp-photo img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 2px solid var(--ink);
+}
+.exp-photo figcaption {
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  padding: 6px 2px 2px;
+  color: var(--ink-soft);
+}
+
+.exp-grid {
+  position: relative;
+  display: block;
+  height: clamp(430px, 56vh, 570px);
+  margin-top: 26px;
+}
+.exp-card {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  cursor: zoom-in;
+  padding: 0;
+  transform: none;
+  transition: width .55s cubic-bezier(.3, .75, .2, 1), left .55s cubic-bezier(.3, .75, .2, 1), box-shadow .3s ease;
+}
+.exp-card:hover, .exp-card:focus-within, .exp-card.is-open {
+  width: 100% !important;
+  left: 0 !important;
+  z-index: 6;
+  transform: none !important;
+  box-shadow: 12px 12px 0 var(--ink);
+}
+
+.exp-1 { left: 0; width: calc((100% - 44px) / 3); background:
+    radial-gradient(rgba(255, 201, 60, .5) 1.6px, transparent 1.7px) 0 0/22px 22px,
+    linear-gradient(165deg, #FFFDF6, #FFF1CF); }
+.exp-2 { left: calc((100% - 44px) / 3 + 22px); width: calc((100% - 44px) / 3); background:
+    repeating-linear-gradient(-45deg, rgba(79, 176, 198, .13) 0 10px, transparent 10px 20px),
+    linear-gradient(165deg, #FFFDF6, #DEF0F4); }
+.exp-3 { left: calc(((100% - 44px) / 3 + 22px) * 2); width: calc((100% - 44px) / 3); background:
+    radial-gradient(rgba(127, 176, 105, .4) 2px, transparent 2.1px) 0 0/18px 18px,
+    linear-gradient(165deg, #FFFDF6, #E4F1DE); }
+
+.exp-summary, .exp-full {
+  position: absolute;
+  inset: 0;
+  padding: 30px 26px;
+  overflow: hidden;
+}
+.exp-summary { display: flex; flex-direction: column; justify-content: center; transition: opacity .35s ease; }
+.exp-card:hover .exp-summary,
+.exp-card:focus-within .exp-summary,
+.exp-card.is-open .exp-summary { opacity: 0; }
+
+.exp-full {
+  opacity: 0;
+  visibility: hidden;
+  overflow: auto;
+  transition: opacity .3s ease, visibility .3s;
+}
+.exp-card:hover .exp-full,
+.exp-card:focus-within .exp-full,
+.exp-card.is-open .exp-full { opacity: 1; visibility: visible; }
+
+.exp-tag { margin: 14px 0 0; font-size: 13px; color: var(--ink-soft); border-top: 2px dashed var(--ink); padding-top: 12px; }
+.exp-full-head .tl-date { margin-bottom: 8px; }
+.exp-keywords {
+  display: inline-block;
+  border: var(--line);
+  background: var(--yellow);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  margin: 4px 0 14px;
+}
+.exp-full ul { margin: 0; padding-left: 18px; columns: 2; column-gap: 34px; }
+.exp-full li { font-size: 14.5px; color: var(--ink-soft); margin: 0 0 9px; break-inside: avoid; }
+.exp-full li::marker { color: var(--red); }
+
+/* 三种展开文字动画：1/3 浮现，2 灵动跳入 */
+.exp-card:nth-child(1):hover .exp-full li,
+.exp-card:nth-child(1):focus-within .exp-full li,
+.exp-card:nth-child(1).is-open .exp-full li,
+.exp-card:nth-child(3):hover .exp-full li,
+.exp-card:nth-child(3):focus-within .exp-full li,
+.exp-card:nth-child(3).is-open .exp-full li {
+  animation: exp-rise .5s both;
+}
+.exp-card:nth-child(2):hover .exp-full li,
+.exp-card:nth-child(2):focus-within .exp-full li,
+.exp-card:nth-child(2).is-open .exp-full li {
+  animation: exp-bounce .55s both;
+}
+.exp-card .exp-full li:nth-child(2) { animation-delay: .05s; }
+.exp-card .exp-full li:nth-child(3) { animation-delay: .1s; }
+.exp-card .exp-full li:nth-child(4) { animation-delay: .15s; }
+.exp-card .exp-full li:nth-child(5) { animation-delay: .2s; }
+.exp-card .exp-full li:nth-child(6) { animation-delay: .25s; }
+@keyframes exp-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes exp-bounce { 0% { opacity: 0; transform: scale(.86) translateY(10px); } 62% { opacity: 1; transform: scale(1.03) translateY(-2px); } 100% { opacity: 1; transform: none; } }
+
+/* ==========================================================================
+   作品集：仅真实作品，悬停放大 150%
+   ========================================================================== */
+
+.marquee-wrap {
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding: 12px 0 6px;
+}
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+.marquee-track { display: flex; width: max-content; animation: marquee-run linear infinite; }
+#design-marquee .marquee-track { animation-duration: 60s; }
+#video-marquee .marquee-track { animation-duration: 42s; }
+.marquee-group { display: flex; gap: 22px; padding-right: 22px; padding-block: 22px; align-items: stretch; }
+@keyframes marquee-run { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.marquee-wrap .work-card {
+  width: 256px;
+  flex: none;
+  position: relative;
+  transform: none;
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s ease;
+}
+.marquee-wrap .work-card:hover,
+.video-card:hover {
+  transform: none;
+  box-shadow: 8px 8px 0 var(--ink);
+  z-index: 20;
+}
+.marquee-wrap .work-card .work-title { font-size: 15px; }
+.marquee-wrap .work-card .work-caption { padding: 12px 14px 10px; }
+
+.video-card {
+  width: 400px;
+  aspect-ratio: 16/10;
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  border: var(--line);
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 var(--ink);
+  background: var(--ink);
+  cursor: zoom-in;
+  transform: none;
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s ease;
+}
+.work-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.video-card:hover .work-video { object-fit: contain; background: #14110e; }
+.video-card .vc-label {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, rgba(43, 38, 32, .62), transparent);
+  color: var(--white);
+  text-shadow: 0 1px 0 rgba(43, 38, 32, .5);
+}
+.video-card .vc-title { font-family: var(--font-display); font-size: 1.1rem; }
+.video-card .vc-note {
+  position: absolute;
+  left: 14px; bottom: 10px;
+  z-index: 3;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  text-shadow: 0 1px 0 rgba(43, 38, 32, .6);
+}
+.play-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 58px;
+  height: 58px;
+  transform: translate(-50%, -50%);
+  border: var(--line);
+  border-radius: 50%;
+  background: rgba(255, 253, 247, .9);
+  box-shadow: 3px 3px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  transition: opacity .25s ease;
+}
+.play-badge svg { width: 22px; height: 22px; margin-left: 3px; }
+.video-card:hover .play-badge { opacity: 0; }
+
+/* ==========================================================================
+   个人技能：图标 + 漂浮
+   ========================================================================== */
+
+.skill-card { padding: 22px 16px 18px; }
+.skill-icon {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 10px;
+  border: var(--line);
+  border-radius: 18px;
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  transform: rotate(-4deg);
+  transition: transform .3s ease;
+}
+.skill-card:nth-child(2) .skill-icon { background: var(--blue); }
+.skill-card:nth-child(3) .skill-icon { background: var(--green); }
+.skill-card:nth-child(4) .skill-icon { background: var(--red); }
+.skill-card:nth-child(5) .skill-icon { background: var(--orange); }
+.skill-card:nth-child(6) .skill-icon { background: var(--blue); }
+.skill-icon svg { width: 30px; height: 30px; }
+.skill-card:hover .skill-icon { transform: rotate(4deg) scale(1.08); }
+
+.tool-storm {
+  position: relative;
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 14px;
+  padding: 4px 2px 14px;
+}
+.storm-chip {
+  display: inline-flex;
+  align-items: center;
+  border: var(--line);
+  border-radius: 999px;
+  padding: 7px 17px;
+  font-weight: 800;
+  font-size: 14px;
+  background: var(--paper-3);
+  box-shadow: 3px 3px 0 var(--ink);
+  animation: storm-a 6.5s ease-in-out infinite alternate;
+}
+.storm-chip:nth-child(3n) { animation-name: storm-b; animation-duration: 7.8s; }
+.storm-chip:nth-child(3n+1) { animation-name: storm-c; animation-duration: 9s; }
+.storm-chip:nth-child(4n) { background: var(--yellow); }
+.storm-chip:nth-child(5n) { background: var(--blue); color: var(--white); }
+.storm-chip:nth-child(6n) { background: var(--green); }
+@keyframes storm-a { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-12px) rotate(3deg) scale(1.05); } }
+@keyframes storm-b { from { transform: translateY(-6px) rotate(2deg) scale(1.04); } to { transform: translateY(5px) rotate(-3deg) scale(.97); } }
+@keyframes storm-c { from { transform: translateX(-5px) translateY(3px) rotate(-1deg); } to { transform: translateX(7px) translateY(-9px) rotate(2deg) scale(1.06); } }
+
+/* ==========================================================================
+   联系方式：咕咕在左放大（透明），文字卡在右
+   ========================================================================== */
+
+.contact-wrap {
+  display: grid;
+  grid-template-columns: minmax(430px, 1.2fr) minmax(430px, .95fr);
+  gap: 30px;
+  align-items: center;
+}
+.contact-gugu-wrap { text-align: center; }
+.contact-gugu {
+  width: 100%;
+  max-width: 680px;
+  margin-inline: auto;
+  filter: drop-shadow(6px 8px 0 rgba(43, 38, 32, .16));
+  animation: gugu-float 5s ease-in-out infinite alternate;
+}
+.contact-gugu-wrap p { font-family: var(--font-display); font-size: 1.3rem; margin: 6px 0 0; }
+@keyframes gugu-float { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-14px) rotate(2.5deg); } }
+
+.contact-card { padding: 30px 30px 24px; transform: rotate(-.4deg); }
+.contact-row { gap: 14px; padding: 13px 0; }
+.contact-actions { gap: 12px; margin-top: 18px; }
+.job-badges { margin-top: 14px; }
+
+/* ==========================================================================
+   减少动态效果
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .job-card, .storm-chip, .meta-dot, .contact-gugu { animation: none !important; }
+  .marquee-track { animation: none !important; }
+  .exp-full li { animation: none !important; }
+}
+
+/* ==========================================================================
+   响应式
+   ========================================================================== */
+
+@media (max-width: 960px) {
+  .home-content { margin-right: clamp(12px, 4vw, 40px); }
+  .jobs-fan { transform: scale(.8); transform-origin: top right; }
+  .exp-grid { height: auto; display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .exp-card { position: relative; top: auto; left: auto !important; width: 100% !important; height: auto; }
+  .exp-summary, .exp-full { position: relative; inset: auto; padding: 24px 22px; }
+  .exp-full { display: none; }
+  .exp-card:hover .exp-full, .exp-card:focus-within .exp-full, .exp-card.is-open .exp-full { display: block; }
+  .exp-full ul { columns: 1; }
+  .video-card { width: 320px; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .contact-gugu-wrap { order: 1; }
+  .contact-gugu { max-width: 430px; }
+}
+
+@media (max-width: 720px) {
+  .home { padding-bottom: 92px; }
+  .home-name { white-space: normal; font-size: clamp(3rem, 15vw, 5rem); }
+  .home-en-inline { font-size: .4em; }
+  .home-content { align-items: flex-start; text-align: left; }
+  .jobs-fan { transform: scale(.62); transform-origin: top left; margin-left: -10px; margin-top: 4px; }
+  .home-meta { left: 12px; right: 12px; bottom: 12px; justify-content: center; font-size: 12px; flex-wrap: wrap; }
+  .exp-photo { width: 86px; }
+  .exp-summary, .exp-full { padding: 20px 18px; }
+  .video-card { width: 270px; }
+  .marquee-group { gap: 16px; padding-right: 16px; }
+  .contact-card { padding: 22px 18px; }
+}
+
+/* ==========================================================================
+   v4 增补：双排作品行 / 全貌预览 / 背景贴纸 / IP 页
+   ========================================================================== */
+
+.row-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  margin: 10px 0 2px;
+}
+.row-title .row-tag {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: var(--line);
+  border-radius: 12px;
+  background: var(--blue);
+  color: var(--white);
+  font-size: 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-4deg);
+}
+.row-tag-v { background: var(--red); }
+
+/* 作品全貌预览：图片与视频各自独立面板 */
+.work-preview,
+.video-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 960;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background: rgba(43, 38, 32, .55);
+  backdrop-filter: blur(6px);
+}
+.work-preview.show { opacity: 1; }
+.video-preview.show { opacity: 1; }
+.work-preview-card,
+.video-preview-card {
+  width: fit-content;
+  max-width: 92vw;
+  padding: 10px;
+  display: block;
+  transform: scale(.92);
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+.work-preview.show .work-preview-card { transform: scale(1); }
+.video-preview.show .video-preview-card { transform: scale(1); }
+.work-preview-card img,
+.video-preview-card video {
+  display: block;
+  margin: auto;
+  width: auto;
+  height: auto;
+  max-width: 86vw;
+  max-height: 76vh;
+  border-radius: 12px;
+}
+.video-preview-card video { background: #1d1a16; }
+.work-preview-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 6px 2px;
+  font-weight: 800;
+  font-size: 15px;
+}
+.work-preview-meta span:last-child { color: var(--ink-soft); font-size: 13px; }
+
+/* 背景贴纸（贵阳绘本建筑，透明虚化） */
+.bg-sticker {
+  position: absolute;
+  z-index: 0;
+  opacity: .5;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(3px 4px 0 rgba(43, 38, 32, .12));
+}
+.bs-1 { right: 2px; top: 46%; width: clamp(64px, 9vw, 118px); transform: rotate(6deg); }
+.bs-2 { left: 2px; top: 46%; width: clamp(64px, 9vw, 118px); transform: rotate(-7deg); }
+.bs-3 { right: 2px; top: 46%; width: clamp(64px, 9vw, 118px); transform: rotate(5deg); }
+.bs-4 { left: 2px; bottom: 30px; width: clamp(110px, 13vw, 170px); transform: rotate(-4deg); }
+.bs-5 { right: 2px; bottom: 26px; width: clamp(110px, 13vw, 170px); transform: rotate(3deg); }
+
+/* 作品/IP 区排版紧凑化，尽量一屏展示完整 */
+  #works, #video, #ip { justify-content: flex-start; }
+  #works { padding-top: calc(var(--nav-h) + 16px); padding-bottom: 18px; }
+  #video { padding-top: calc(var(--nav-h) + 16px); padding-bottom: 18px; }
+  #ip { padding-top: calc(var(--nav-h) + 18px); padding-bottom: 18px; }
+  #works .sec-head, #video .sec-head, #ip .sec-head { margin-bottom: 8px; }
+.row-title { font-size: 1.08rem; margin: 6px 0 0; }
+.row-title .row-tag { width: 32px; height: 32px; font-size: 12px; }
+.marquee-group { gap: 16px; padding-right: 16px; padding-block: 10px; }
+.marquee-wrap { padding: 2px 0 4px; }
+.marquee-wrap .work-card { width: 228px; }
+.marquee-wrap .work-card .work-caption { padding: 10px 12px 8px; }
+.marquee-wrap .work-card .work-title { font-size: 14px; }
+.marquee-wrap .work-card .work-meta { font-size: 12px; padding-top: 7px; }
+.video-card { width: 460px; }
+.ip-wrap { margin-top: 6px; gap: 28px; }
+.ip-hero { padding: 18px 14px 12px; }
+.ip-mascot { width: min(200px, 64%); }
+.ip-name h3 { font-size: 1.8rem; }
+.ip-text h4 { font-size: 1.3rem; }
+.ip-text p { font-size: 14.5px; line-height: 1.8; margin-bottom: 12px; }
+.ip-gallery { margin-top: 16px; gap: 14px; }
+.ip-pic img { height: 158px; }
+.ip-pic figcaption { padding: 7px 10px; font-size: 12px; }
+
+/* IP 页 */
+.ip-wrap {
+  display: grid;
+  grid-template-columns: minmax(300px, .95fr) minmax(380px, 1.15fr);
+  gap: 34px;
+  align-items: center;
+  margin-top: 18px;
+}
+.ip-hero {
+  position: relative;
+  padding: 28px 18px 16px;
+  text-align: center;
+  transform: rotate(-1deg);
+  background:
+    radial-gradient(rgba(255, 201, 60, .5) 1.6px, transparent 1.7px) 0 0/20px 20px,
+    linear-gradient(165deg, #FFFDF6, #FFEED3);
+}
+.ip-mascot {
+  width: min(240px, 70%);
+  margin: 0 auto 6px;
+  filter: drop-shadow(6px 8px 0 rgba(43, 38, 32, .14));
+  animation: gugu-float 5s ease-in-out infinite alternate;
+}
+.ip-name h3 { font-family: var(--font-display); font-weight: 400; font-size: 2.1rem; margin: 4px 0 0; }
+.ip-name p { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: .18em; color: var(--ink-soft); }
+.ip-text h4 { font-family: var(--font-display); font-weight: 400; font-size: 1.45rem; margin: 0 0 8px; }
+.ip-text p { color: var(--ink-soft); font-size: 15.5px; line-height: 1.9; margin: 0 0 16px; }
+.ip-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.ip-cat-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  border: var(--line);
+  background: var(--paper-3);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-1deg);
+}
+.ip-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+.ip-pic { margin: 0; overflow: hidden; border-radius: 16px; background: var(--paper-3); transform: rotate(-.6deg); transition: transform .3s ease, box-shadow .3s ease; }
+.ip-pic:nth-child(even) { transform: rotate(.7deg); }
+.ip-pic:hover { transform: rotate(0) translateY(-6px) scale(1.04); box-shadow: 8px 8px 0 var(--ink); }
+.ip-pic img { width: 100%; height: 190px; object-fit: cover; }
+.ip-pic figcaption { padding: 10px 12px; font-weight: 800; font-size: 13px; text-align: center; color: var(--ink-soft); }
+
+@media (max-width: 960px) {
+  .ip-wrap { grid-template-columns: 1fr; gap: 22px; }
+  .ip-gallery { grid-template-columns: repeat(2, 1fr); }
+  .ip-pic img { height: 170px; }
+}
+
+@media (max-width: 720px) {
+  .ip-gallery { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ip-pic img { height: 130px; }
+  .ip-mascot { width: 170px; }
+  .bg-sticker { opacity: .4; width: 72px !important; }
+  .bs-1, .bs-3 { display: none; }
+}
+
+/* 悬停卡片不再自身放大：图片/视频分别只由全貌预览呈现 */
+.marquee-wrap .work-card,
+.video-card {
+  cursor: zoom-in;
+}
+
+/* ==========================================================================
+   高度自适应：让每个板块尽量一屏放完
+   ========================================================================== */
+
+@media (min-width: 721px) and (max-height: 860px) {
+  .page { padding-top: calc(var(--nav-h) + 12px); padding-bottom: 12px; }
+  .sec-head { margin-bottom: 8px; }
+  .h2-title { font-size: clamp(1.5rem, 3.4vw, 2.2rem); }
+  .sec-sub { font-size: 13px; margin-top: 2px; }
+  .kicker { margin-bottom: 2px; }
+  #works .sec-head, #ip .sec-head { margin-bottom: 4px; }
+  .row-title { margin: 4px 0 0; font-size: 1rem; }
+  .row-title .row-tag { width: 28px; height: 28px; }
+  .marquee-group { gap: 12px; padding-right: 12px; padding-block: 6px; }
+  .marquee-wrap { padding: 0; }
+  .marquee-wrap .work-card { width: 196px; }
+  .marquee-wrap .work-card .work-caption { padding: 7px 9px 6px; }
+  .marquee-wrap .work-card .work-title { font-size: 13px; }
+  .marquee-wrap .work-card .work-meta { font-size: 11px; padding-top: 5px; }
+  .video-card { width: 300px; }
+  .video-card .vc-label { padding: 8px 12px; }
+  .video-card .vc-title { font-size: .95rem; }
+  .exp-grid { height: clamp(360px, 50vh, 470px); margin-top: 10px; }
+  .exp-summary, .exp-full { padding: 20px 18px; }
+  .exp-full li { font-size: 13px; }
+  .exp-photo { width: 96px; }
+  .ip-wrap { margin-top: 2px; gap: 20px; }
+  .ip-mascot { width: 160px; }
+  .ip-text p { font-size: 13.5px; line-height: 1.7; margin-bottom: 8px; }
+  .ip-tags { gap: 6px; }
+  .ip-tags .chip { font-size: 12px; padding: 4px 11px; }
+  .ip-gallery { margin-top: 8px; gap: 10px; }
+  .ip-pic img { height: 110px; }
+  .ip-pic figcaption { padding: 5px 8px; font-size: 11px; }
+  .skill-grid { gap: 10px; }
+  .skill-card { padding: 12px 10px 10px; }
+  .skill-icon { width: 48px; height: 48px; margin-bottom: 6px; }
+  .skill-icon svg { width: 24px; height: 24px; }
+  .skill-card h3 { font-size: 1.15rem; }
+  .skill-card .skill-desc { font-size: 11.5px; }
+  .tool-storm { margin-top: 12px; gap: 8px 10px; padding-bottom: 6px; }
+  .storm-chip { padding: 5px 12px; font-size: 12px; }
+  .self-eval { margin-top: 10px; padding: 10px 14px; font-size: 12.5px; }
+  .contact-wrap { gap: 20px; margin-top: 2px; }
+  .contact-card { padding: 18px 20px 16px; }
+  .contact-row { padding: 9px 0; gap: 12px; }
+  .contact-icon { width: 42px; height: 42px; }
+  .contact-actions { margin-top: 12px; }
+  .contact-actions .btn { padding: 10px 20px; font-size: 14px; }
+  .contact-gugu { max-width: 520px; }
+  .contact-gugu-wrap p { font-size: 1.1rem; margin-top: 2px; }
+  .job-badges { margin-top: 10px; }
+}
+
+@media (min-width: 721px) and (max-height: 800px) {
+  .contact-wrap { grid-template-columns: minmax(260px, .85fr) minmax(360px, 1fr); gap: 14px; }
+  .contact-gugu { max-width: 340px; }
+  .contact-card { padding: 12px 16px 10px; }
+  .contact-card .lead { font-size: 13.5px; margin-bottom: 4px !important; }
+  .contact-row { padding: 6px 0; gap: 10px; }
+  .contact-icon { width: 36px; height: 36px; }
+  .contact-icon svg { width: 20px; height: 20px; }
+  .contact-label { font-size: 11px; }
+  .contact-value { font-size: 1rem; }
+  .contact-actions { margin-top: 8px; gap: 8px; }
+  .contact-actions .btn { padding: 8px 16px; font-size: 13px; }
+  .job-badges { margin-top: 6px; gap: 6px; }
+  .job-badges .chip { font-size: 12px; padding: 4px 11px; }
+  .contact-note { margin-top: 6px; font-size: 12px; }
+  .contact-note .btn { margin-top: 6px !important; }
+  .contact-gugu-wrap p { font-size: 1rem; margin: 0; }
+  .footer-line { margin-top: 8px; padding-top: 8px; font-size: 12px; }
+}
+
+@media (min-width: 721px) and (max-height: 700px) {
+  .nav { height: 56px; }
+  :root { --nav-h: 56px; }
+  .page { padding-top: calc(var(--nav-h) + 8px); padding-bottom: 8px; }
+  .marquee-wrap .work-card { width: 172px; }
+  .work-media { aspect-ratio: 4/3; }
+  .video-card { width: 250px; }
+  .video-card .vc-note { font-size: 10px; }
+  .exp-grid { height: 340px; }
+  .exp-full ul { columns: 1; }
+  .exp-full li { font-size: 12px; margin-bottom: 5px; }
+  .ip-pic img { height: 90px; }
+  .ip-mascot { width: 130px; }
+  .ip-cat-note { font-size: 11px; padding: 5px 12px; }
+  .contact-gugu { max-width: 420px; }
+  .bg-sticker { opacity: .35; }
+}
+
+/* 联系方式：咕咕顾与文字整体居中排版 */
+.contact-wrap {
+  grid-template-columns: 1fr !important;
+  justify-items: center;
+}
+.contact-gugu-wrap { order: 0 !important; }
+.contact-card { width: min(720px, 100%); justify-self: center; }
+.contact-gugu { max-width: 520px; }
+#works, #video, #ip { justify-content: center; }
+
+@media (min-width: 721px) and (max-height: 920px) {
+  .contact-wrap { gap: 8px; }
+  .contact-gugu { max-width: 250px; }
+  .contact-gugu-wrap p { font-size: 1rem; margin: 0; }
+  .contact-card { width: min(620px, 100%); padding: 12px 16px 8px; }
+  .contact-card .lead { font-size: 13.5px; margin-bottom: 4px !important; }
+  .contact-row { padding: 6px 0; gap: 10px; }
+  .contact-icon { width: 40px; height: 40px; }
+  .contact-label { font-size: 11px; }
+  .contact-value { font-size: 1rem; }
+  .contact-actions { margin-top: 8px; }
+  .contact-actions .btn { padding: 7px 16px; font-size: 13px; }
+  .job-badges { margin-top: 6px; gap: 6px; }
+  .job-badges .chip { font-size: 12px; padding: 4px 11px; }
+  .contact-note { font-size: 12.5px; }
+  .footer-line { margin-top: 8px; padding-top: 8px; }
+}
+@media (min-width: 721px) and (max-height: 860px) {
+  .contact-gugu { max-width: 240px; }
+}
+@media (min-width: 721px) and (max-height: 820px) {
+  .contact-wrap { gap: 6px; }
+  .contact-gugu { max-width: 190px; }
+  .contact-gugu-wrap p { font-size: .92rem; }
+  .contact-card { width: min(560px, 100%); padding: 10px 14px 8px; }
+  .contact-card .lead { font-size: 12.5px; margin-bottom: 2px !important; }
+  .contact-row { padding: 4px 0; }
+  .contact-value { font-size: .95rem; }
+  .contact-actions { margin-top: 6px; }
+  .contact-actions .btn { padding: 6px 12px; font-size: 12px; }
+  .contact-note { font-size: 11.5px; }
+  .contact-note .btn { padding: 6px 12px !important; font-size: 12px !important; }
+  .footer-line { font-size: 11px; margin-top: 6px; padding-top: 6px; }
+}
+@media (min-width: 721px) and (max-height: 700px) {
+  .contact-gugu { max-width: 150px; }
+  .contact-card { width: min(520px, 100%); padding: 8px 12px 6px; }
+  .contact-card .lead { font-size: 11.5px; }
+  .contact-row { padding: 3px 0; }
+  .contact-icon { width: 34px; height: 34px; }
+  .contact-actions .btn { padding: 5px 10px; font-size: 11px; }
+  .job-badges .chip { font-size: 11px; padding: 3px 9px; }
+  .contact-note { font-size: 11px; }
+  .footer-line { font-size: 10px; }
+}
+
+/* ==========================================================================
+   联系方式终版：恢复左图右卡，角色放大，文字集中到角色脚下
+   ========================================================================== */
+.contact-wrap {
+  grid-template-columns: minmax(340px, .95fr) minmax(420px, 1.05fr) !important;
+  justify-items: stretch;
+  align-items: center;
+}
+.contact-gugu-wrap {
+  order: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.contact-gugu {
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+}
+.contact-gugu-wrap p {
+  margin: 6px auto 0;
+  width: fit-content;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.contact-card { width: 100%; min-width: 0; }
+#works, #video, #ip { justify-content: center; }
+
+@media (min-width: 721px) and (max-height: 920px) {
+  .contact-gugu { max-width: 470px; }
+  .contact-card { padding: 12px 18px 8px; }
+  .contact-row { padding: 6px 0; }
+  .contact-actions { margin-top: 8px; }
+  .contact-actions .btn { padding: 7px 16px; font-size: 13px; }
+  .contact-note { font-size: 12px; }
+}
+@media (min-width: 721px) and (max-height: 860px) {
+  .contact-gugu { max-width: 380px; }
+  .contact-card .lead { font-size: 13px; margin-bottom: 4px !important; }
+  .contact-row { padding: 5px 0; }
+  .contact-icon { width: 40px; height: 40px; }
+  .job-badges .chip { font-size: 12px; padding: 4px 11px; }
+}
+@media (min-width: 721px) and (max-height: 820px) {
+  .contact-gugu { max-width: 300px; }
+  .contact-gugu-wrap p { font-size: .9rem; margin-top: 2px; }
+  .contact-card { padding: 9px 14px 6px; }
+  .contact-row { padding: 4px 0; }
+  .contact-value { font-size: .95rem; }
+  .contact-actions .btn { padding: 6px 12px; font-size: 12px; }
+  .contact-note { font-size: 11px; }
+  .footer-line { font-size: 11px; margin-top: 6px; padding-top: 6px; }
+}
+@media (min-width: 721px) and (max-height: 700px) {
+  .contact-gugu { max-width: 220px; }
+  .contact-card { padding: 7px 10px 5px; }
+  .contact-row { padding: 3px 0; }
+  .contact-icon { width: 34px; height: 34px; }
+  .contact-actions .btn { padding: 5px 10px; font-size: 11px; }
+  .job-badges .chip { font-size: 11px; padding: 3px 9px; }
+}
+@media (max-width: 960px) {
+  .contact-wrap { grid-template-columns: 1fr !important; }
+  .contact-card { width: 100%; }
+  .contact-gugu { max-width: 340px; }
+}
+
+/* IP 页：人物设定图 + 底部小图循环滚动 */
+.ip-sheet { margin-top: 14px; display: grid; justify-items: center; }
+.ip-sheet-fig {
+  margin: 0;
+  width: min(900px, 100%);
+  padding: 10px;
+  background: var(--paper-3);
+  transform: rotate(-.4deg);
+}
+.ip-sheet-fig img { width: 100%; border-radius: 10px; border: 2px solid var(--ink); }
+.ip-sheet-fig figcaption {
+  padding: 9px 4px 3px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.ip-marquee {
+  margin-top: 12px;
+  overflow: hidden;
+}
+.ip-marquee:hover .ip-track { animation-play-state: paused; }
+.ip-track {
+  display: flex;
+  width: max-content;
+  animation: ip-slide 30s linear infinite;
+}
+.ip-mgroup { display: flex; gap: 12px; padding-right: 12px; }
+.ip-mini {
+  margin: 0;
+  width: 132px;
+  height: 88px;
+  flex: none;
+  border: var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper-3);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.ip-mini img { width: 100%; height: 100%; object-fit: cover; }
+@keyframes ip-slide { to { transform: translateX(-50%); } }
+
+/* 回到顶部提示的箭头朝上 */
+.next-hint svg { transition: rotate .3s ease; }
+.next-hint.is-top svg { rotate: 180deg; }
+
+/* ==========================================================================
+   作品集：改网格排版（去掉右→左自动滚动），自由滚动页
+   ========================================================================== */
+.page-sub-sub {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin: 2px 0 0;
+}
+.sec-head-text .sec-sub:last-child { margin-top: 2px; }
+
+.marquee-wrap {
+  overflow: visible;
+  padding: 0 0 18px;
+}
+.marquee-wrap .marquee-track {
+  width: auto;
+  display: block;
+  transform: none;
+  animation: none !important;
+}
+.marquee-wrap .marquee-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: auto;
+  padding: 4px 0;
+}
+#video-marquee .marquee-group { grid-template-columns: repeat(3, 1fr); }
+.marquee-wrap .work-card,
+.video-card {
+  width: auto;
+}
+.video-card { aspect-ratio: 16/10; }
+
+@media (max-width: 1200px) {
+  .marquee-group { grid-template-columns: repeat(3, 1fr); }
+  #video-marquee .marquee-group { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  #video-marquee .marquee-group { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 720px) {
+  .marquee-group { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  #video-marquee .marquee-group { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 560px) {
+  #video-marquee .marquee-group { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 工作经历：近期/早期标签 + 预览文字填满卡片 */
+.exp-era {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  border: var(--line);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: rotate(3deg);
+}
+.era-new { background: var(--red); color: var(--white); }
+.era-old { background: var(--blue); color: var(--white); }
+.exp-summary { gap: 6px; }
+.exp-mini {
+  margin: 6px 0 0;
+  padding: 10px 0 0 18px;
+  border-top: 2px dashed var(--ink);
+}
+.exp-mini li {
+  margin: 5px 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.exp-mini li::marker { color: var(--red); }
+
+@media (min-width: 721px) and (max-height: 860px) {
+  .exp-era { top: 10px; right: 10px; padding: 5px 12px; font-size: 11px; }
+  .exp-mini li { font-size: 12px; margin: 3px 0; }
+}
+
+/* ==========================================================================
+   联系页微调：文字左移 10px；内容整体上移；卡片与底部虚线留出距离
+   ========================================================================== */
+.contact-gugu-wrap p { transform: translateX(-10px); }
+#contact {
+  justify-content: flex-start;
+  padding-top: calc(var(--nav-h) + 4px);
+}
+#contact .sec-head { margin-bottom: 10px; }
+#contact .footer-line { margin-top: 30px; }
+@media (min-width: 721px) and (max-height: 820px) {
+  #contact .footer-line { margin-top: 14px; }
+}

@@ -1,0 +1,52 @@
+顾光诚作品集网站 · 上架部署说明
+========================================
+
+一、这是什么
+这是一个可直接上架的静态网站文件夹：里面只有 index.html 和 assets（图片、字体、样式、脚本、视频、简历附件）。
+不需要服务器、数据库，也不需要安装任何东西。
+
+二、本地预览
+1) 最简单：直接双击打开 index.html 即可看到大部分内容；
+2) 推荐方式（功能最完整）：在“顾光诚作品集网站”文件夹内打开命令行，运行：
+      python -m http.server 8080
+   然后用浏览器访问 http://localhost:8080/
+   （也可以使用 VS Code 的 Live Server 插件一键预览）
+
+三、上架方式（任选一种即可）
+
+【GitHub Pages】
+1. 注册/登录 github.com，新建一个仓库（例如 gu-portfolio）
+2. 在仓库网页里上传文件：把本文件夹内的所有内容（index.html 和 assets 文件夹）上传到仓库根目录
+3. 打开仓库 Settings -> Pages
+4. Source 选择 Deploy from a branch，分支 main，目录 / (root)，点 Save
+5. 等 1~2 分钟，访问：https://你的用户名.github.io/gu-portfolio/
+
+【Vercel】
+1. 登录 vercel.com
+2. 点击 Add New -> Project，导入包含本网站的仓库
+3. Framework Preset 选 Other，不需要任何构建命令
+4. 点 Deploy，完成后得到 https://项目名.vercel.app/
+（也可用命令行：在本文件夹内运行 vercel --prod）
+
+【Netlify】
+1. 登录 netlify.com
+2. 点击 Add new site -> Deploy manually
+3. 把本文件夹（含 index.html 和 assets）直接拖进上传框
+4. 稍等片刻即得到 https://xxxx.netlify.app/，之后可绑定自己的域名
+
+四、常见问题
+1. 页面看起来是旧版？请按 Ctrl + F5 强制刷新。
+2. 视频悬停没有声音？这是浏览器安全规则：网页必须收到一次“点击”后才能自动带声音播放。
+   请先点击页面任意位置或点一下视频，之后鼠标移上去的视频就会自动带声音播放。
+3. 文件体积：assets 总共约 52MB，托管平台上一般都没有问题；如果平台限制更小，可先删除 assets/video/hero-4k.mp4（首页背景会自动回退到封面图）。
+4. 手机上看：作品图片点按可放大预览，视频点按播放。
+
+五、文件结构
+index.html                 网站首页（单页 7 个板块）
+assets/css/                页面样式
+assets/js/                 页面交互与动效
+assets/fonts/              标题字体（本地子集，无需联网）
+assets/img/                作品图片、咕咕顾素材、透明贴纸
+assets/video/              首页 4K 背景视频与封面
+assets/video/works/        9 个视频作品（带声音）+ 封面
+assets/顾光诚简历_新媒体运营_文字版.txt   简历下载附件
