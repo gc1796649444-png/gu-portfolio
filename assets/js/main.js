@@ -14,6 +14,7 @@
   var ScrollTrigger = window.ScrollTrigger;
   var motion = !reduced && gsap && ScrollTrigger;
   var coarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  var narrow = window.matchMedia('(max-width: 720px)').matches;
   var audioReady = false;
   function markAudioReady() { audioReady = true; }
   window.addEventListener('pointerdown', markAudioReady, { once: true });
@@ -248,6 +249,52 @@
     if (note) note.textContent = soundGranted ? '悬停播放 · 有声' : '悬停预览 · 点一次后自动有声';
   }
 
+  /* 手机端：点击视频卡片 -> 全屏自适应播放；电脑端保持原有交互不受影响 */
+  var videoPreview = doc.getElementById('video-preview');
+  var videoPreviewVideo = doc.getElementById('video-preview-video');
+  var videoPreviewTitle = doc.getElementById('video-preview-title');
+  var videoPreviewClose = doc.getElementById('video-preview-close');
+  var justOpened = false;
+
+  function hideVideoPreview() {
+    if (!videoPreview) return;
+    if (videoPreviewVideo) {
+      videoPreviewVideo.pause();
+      videoPreviewVideo.removeAttribute('src');
+      videoPreviewVideo.load();
+    }
+    videoPreview.classList.remove('show');
+    videoPreview.setAttribute('aria-hidden', 'true');
+    doc.body.style.overflow = '';
+  }
+
+  function openVideoPreview(card) {
+    if (!videoPreview || !videoPreviewVideo) return;
+    var v = card.querySelector('video');
+    if (!v) return;
+    stopCardVideo(card);
+    var source = v.querySelector('source');
+    videoPreviewVideo.src = source ? source.src : '';
+    videoPreviewVideo.poster = v.poster || '';
+    var title = card.querySelector('.vc-title');
+    if (videoPreviewTitle) videoPreviewTitle.textContent = title ? title.textContent : '';
+    videoPreviewVideo.muted = false;
+    videoPreview.classList.add('show');
+    videoPreview.setAttribute('aria-hidden', 'false');
+    justOpened = true;
+    clearTimeout(openVideoPreview._reset);
+    openVideoPreview._reset = setTimeout(function () { justOpened = false; }, 450);
+    if (narrow) doc.body.style.overflow = 'hidden';
+    var p = videoPreviewVideo.play();
+    if (p) p.catch(function () {
+      videoPreviewVideo.muted = true;
+      var p2 = videoPreviewVideo.play();
+      if (p2) p2.catch(function () {});
+    });
+  }
+
+  if (videoPreviewClose) videoPreviewClose.addEventListener('click', hideVideoPreview);
+
   function playCardVideo(card) {
     var v = card.querySelector('video');
     if (!v) return;
@@ -277,6 +324,10 @@
     card.addEventListener('focus', function () { playCardVideo(card); });
     card.addEventListener('blur', function () { stopCardVideo(card); });
     card.addEventListener('click', function () {
+      if (coarse || narrow) {
+        openVideoPreview(card);
+        return;
+      }
       if (v.muted) {
         soundGranted = true;
         v.muted = false;
@@ -295,6 +346,13 @@
       }
     });
   });
+  if ((coarse || narrow) && videoPreview) {
+    doc.addEventListener('click', function (e) {
+      if (!justOpened && videoPreview.classList.contains('show') && !e.target.closest('.video-preview')) {
+        hideVideoPreview();
+      }
+    });
+  }
 
   /* ---------- 作品标签切换 ---------- */
   var tabButtons = doc.querySelectorAll('.tab-btn');
@@ -325,7 +383,7 @@
 
   /* ---------- 工作经历：触屏点按展开（桌面为 CSS 悬停） ---------- */
   var expCards = doc.querySelectorAll('.exp-card');
-  if (coarse) {
+  if (coarse || narrow) {
     expCards.forEach(function (card) {
       card.addEventListener('click', function (e) {
         e.preventDefault();
@@ -405,7 +463,7 @@
     });
 
     var storm = doc.getElementById('tool-storm');
-    if (storm) {
+    if (storm && !coarse && !narrow) {
       gsap.to(storm, {
         yPercent: -12,
         ease: 'none',

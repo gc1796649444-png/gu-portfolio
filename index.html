@@ -392,6 +392,15 @@
     </section>
   </main>
 
+  <!-- 视频全屏预览层（仅手机端点击作品视频时触发，电脑端不使用） -->
+  <div class="video-preview" id="video-preview" aria-hidden="true">
+    <button class="video-preview-close" id="video-preview-close" type="button" aria-label="关闭视频预览">×</button>
+    <div class="video-preview-card sticker">
+      <video id="video-preview-video" controls playsinline preload="metadata"></video>
+      <p class="video-preview-title" id="video-preview-title"></p>
+    </div>
+  </div>
+
   <!-- 设计作品预览（仅图片） -->
   <div class="work-preview" id="work-preview" aria-hidden="true">
     <div class="work-preview-card sticker">
